@@ -1,0 +1,190 @@
+<main class='mainHome profile'>
+  <a class='outUser' href='http://localhost:8080/api/session/logout'><ion-icon
+      name='log-out-outline'
+    ></ion-icon></a>
+  <div class='avatar__name'>
+    <div class='avatarContainer'>
+      <div class="avatarImgContainer">
+        {{#if avatar}}
+          <img class="avatarImg" src={{fileAvatar}} alt="Avatar">
+        {{else}}
+          <ion-icon name="person-outline"></ion-icon>
+        {{/if}}
+      </div>
+      <div class='editImg' id="updateAvatar">
+        <ion-icon name='pencil'></ion-icon>
+        <form action="/api/session/profile/updateAvatar" method="post" enctype="multipart/form-data" id="formAvatar">
+          <input class="inputAvatar" type="file" name="avatar" />
+        </form>
+      </div>
+    </div>
+    <h2>{{nameUser}}</h2>
+  </div>
+  <form method="post" action="/api/session/profile/update" id="formProfile">
+    <div class='userDataContainer'>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name='id-card-outline'></ion-icon>
+        </div>
+        <div class='dataInfoContainer'>
+          <span class='dataInfo'>{{id}}</span>
+          <div class='dataName'>Id User</div>
+        </div>
+      </div>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name='mail-outline'></ion-icon>
+        </div>
+        <div class='dataInfoContainer'>
+          <span class='dataInfo email'>{{email}}</span>
+          <div class='dataName'>Email</div>
+        </div>
+      </div>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name='alarm-outline'></ion-icon>
+          <div class='updateData'>
+            <div id="updateAge">
+              <ion-icon name='pencil'></ion-icon>
+            </div>
+          </div>
+        </div>
+        <div class='dataInfoContainer'>
+          <input name="age" class='dataInfo age' type="text" value={{age}} disabled="true" oninput="this.size = this.value.length">
+          <div class='dataName'>Age</div>
+          <i id="selectorInput"></i>
+        </div>
+      </div>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name='shield-outline'></ion-icon>
+          <div class='updateData'>
+            <div id="updateRole">
+              <ion-icon name='pencil'></ion-icon>
+            </div>
+          </div>
+        </div>
+        <div class='dataInfoContainer'>
+          <select name="role" class='dataInfo role' name="role" disabled="true">
+            {{#if updateAdmin}}
+              <option value="admin" name="admin"  {{#if roleAdmin}}selected{{else}}{{/if}}>Administrator</option>
+            {{else}} {{/if}}
+            {{#if updateModerator}}
+              <option value="moderator" name="moderator" {{#if roleModerator}}selected{{else}}{{/if}}>Moderator</option>
+            {{else}} {{/if}}
+            <option value="user" name="user" {{#if roleUser}} selected{{else}}{{/if}}>User</option>
+          </select>
+          <i id="selectorRole"></i>
+          <div class='dataName'>Role</div>
+          <div class="tooltipRole">
+            <span>To change the Role provide the necessary information</span>
+            <span><strong>Moderator:</strong>Identification - Address</span>
+            <span><strong>Administrador:</strong>Identification - Address - Account</span>
+          </div>
+        </div>
+      </div>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name='calendar-outline'></ion-icon>
+        </div>
+        <div class='dataInfoContainer'>
+          <span class='dataInfo'>{{created}}</span>
+          <div class='dataName'>Created</div>
+        </div>
+      </div>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <div class='dataInfoContainer'>
+          <div class='dataInfo'>
+            {{#if identification}}
+              <ion-icon class="successInfo" name="checkmark-done-outline"></ion-icon>
+            {{else}}
+              <ion-icon class="uploadInfo" name="cloud-upload-outline" id="identification"></ion-icon>
+              <form></form>
+              <form action="/api/session/profile/updateDocuments" method="post" enctype="multipart/form-data" id="formIdentification">
+              <input class="inputIdentification" type="file" name="identification" />
+              </form>
+            {{/if}}
+          </div>
+          <div class='dataName'>Identification</div>
+        </div>
+      </div>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name="home-outline"></ion-icon>
+        </div>
+        <div class='dataInfoContainer'>
+          <div class='dataInfo'>
+            {{#if address}}
+              <ion-icon class="successInfo" name="checkmark-done-outline"></ion-icon>
+            {{else}}
+              <ion-icon class="uploadInfo" name="cloud-upload-outline" id="address"></ion-icon>
+              <form></form>
+              <form action="/api/session/profile/updateDocuments" method="post" enctype="multipart/form-data" id="formAddress">
+                <input class="inputAddress" type="file" name="address" />
+              </form>
+            {{/if}}
+          </div>
+          <div class='dataName'>Address</div>
+        </div>
+      </div>
+      <div class='userData'>
+        <div class='dataIcon'>
+          <ion-icon name="trending-up-outline"></ion-icon>
+        </div>
+        <div class='dataInfoContainer'>
+          <div class='dataInfo'>
+            {{#if account}}
+              <ion-icon class="successInfo" name="checkmark-done-outline"></ion-icon>
+            {{else}}
+              <ion-icon class="uploadInfo" name="cloud-upload-outline" id="account"></ion-icon>
+              <form></form>
+              <form action="/api/session/profile/updateDocuments" method="post" enctype="multipart/form-data" id="formAccount">
+                <input class="inputAccount" type="file" name="account" />
+              </form>
+            {{/if}}
+          </div>
+          <div class='dataName'>Account</div>
+        </div>
+      </div>
+    </div>
+    <div class="profileFooter">
+      <div class="profileBtn">
+        <div class="btn-layer send"></div>
+        <input class="btn-text" type="submit" value="Update" id="updateProfile"/>
+      </div>
+      <div class="profileBtn">
+        <div class="btn-layer delete"></div>
+        <input class="btn-text" value="Delete" id="deleteUser"/>
+      </div>
+    </div>
+  </form>
+  <div class="recoverContainer" id="deleteAccountContainer">
+    <div class="recover-wrapper">
+      <form class="recover" method="post" action="/api/session/profile/deleteAccount" id="formDeleteAccount">
+        <header>
+          <h2>Delete Account</h2>
+        </header>
+        <main class="deteteAccountMain">
+          <label for="deteteAccountMain">Are you sure you want to delete your account? 
+            This will close your session immediately and you will not be able to log in again.</label>
+          <input type="password" name="password" placeholder="Password" id="passwordDeleteAccount"/>
+        </main>
+        <footer>
+          <div class="recoverBtn">
+            <div class="btn-layer"></div>
+            <div class="btn-text" id="deleteAccountCancel">Cancel</div>
+          </div>
+          <div class="recoverBtn">
+            <div class="btn-layer send"></div>
+            <input class="btn-text" type="submit" value="Delete" id="deleteAccount"/>
+          </div>
+        </footer>
+        <label for="recoveryError" class="recoveryMessage recoveryError" id="deleteAccountMessage">Invalid Password</label>
+      </form>
+    </div>
+  </div>
+</main>
+<script type="module" src="js/profile.js"></script>
